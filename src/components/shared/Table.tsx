@@ -56,13 +56,12 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
                 <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
                   {headerGroup.headers.map((column, columnIndex) => (
                     <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
                       key={columnIndex}
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {column.render('Header')}
                       <span>
-                        {column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}
+
                       </span>
                     </th>
                   ))}
