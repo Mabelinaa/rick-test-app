@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable, usePagination, useSortBy, Column } from 'react-table';
+import { useTable, usePagination, useSortBy, Column, TableInstance } from 'react-table';
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -22,7 +22,25 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = useTable({ columns, data }, useSortBy, usePagination);
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy,
+    usePagination
+  ) as TableInstance<T> & {
+    page: any[];
+    canPreviousPage: boolean;
+    canNextPage: boolean;
+    pageOptions: number[];
+    pageCount: number;
+    gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
+    nextPage: () => void;
+    previousPage: () => void;
+    setPageSize: (pageSize: number) => void;
+    state: { pageIndex: number; pageSize: number };
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -126,16 +144,3 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
 
 export default Table;
 
-export function ImgCell({ value, column, row }) {
-  return (
-    <div className="flex items-center">
-      <div className="flex-shrink-0 h-10 w-10">
-        <img
-          className="h-10 w-10 rounded-full"
-          src={row.original[column.imgAccessor]}
-          alt=""
-        />
-      </div>
-    </div>
-  );
-}
