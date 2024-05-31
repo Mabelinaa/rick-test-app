@@ -34,11 +34,12 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
 
             {/* Cabeceras */}
             <thead className="bg-gray-50">
-              {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
+              {headerGroups.map((headerGroup, headerGroupIndex) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                  {headerGroup.headers.map((column, columnIndex) => (
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
+                      key={columnIndex}
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {column.render('Header')}
@@ -53,12 +54,12 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
 
             {/* Celdas */}
             <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-              {page.map((row, i) => {
+              {page.map((row, rowIndex) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => (
-                      <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap">
+                  <tr {...row.getRowProps()} key={rowIndex}>
+                    {row.cells.map((cell, cellIndex) => (
+                      <td {...cell.getCellProps()} key={cellIndex} className="px-6 py-4 whitespace-nowrap">
                         {cell.render('Cell')}
                       </td>
                     ))}
