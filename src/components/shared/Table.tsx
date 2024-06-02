@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTable, usePagination, useSortBy, Column, TableInstance } from 'react-table';
+
+import useSearchStore from '@/stores/searchInput-store';
 
 interface TableProps<T extends object> {
   columns: Column<T>[];
@@ -7,6 +9,17 @@ interface TableProps<T extends object> {
 }
 
 const Table = <T extends object>({ columns, data }: TableProps<T>) => {
+
+  const { searchTerm } = useSearchStore();
+
+  const filteredData = useMemo(() => {
+    return data.filter((item) => {
+      return Object.values(item).some((value) => {
+        return String(value).toLowerCase().includes(searchTerm.toLowerCase());
+      });
+    });
+  }, [data, searchTerm]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -25,7 +38,7 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
   } = useTable(
     {
       columns,
-      data,
+      data: filteredData || [],
     },
     useSortBy,
     usePagination
@@ -60,9 +73,6 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {column.render('Header')}
-                      <span>
-
-                      </span>
                     </th>
                   ))}
                 </tr>
@@ -84,17 +94,14 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
                 );
               })}
             </tbody>
+
           </table>
 
           {/* Botones de navegación */}
           <div className="py-3 flex items-center justify-between">
             <div className="flex-1 flex justify-between sm:hidden">
-              <button onClick={() => previousPage()} disabled={!canPreviousPage} className="btn">
-                Previous
-              </button>
-              <button onClick={() => nextPage()} disabled={!canNextPage} className="btn">
-                Next
-              </button>
+              <button onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+              <button onClick={() => nextPage()} disabled={!canNextPage} >Next </button>
             </div>
             <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div className="flex gap-x-2">
@@ -107,34 +114,15 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
                   className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
                   aria-label="Pagination"
                 >
-                  <button
-                    onClick={() => gotoPage(0)}
-                    disabled={!canPreviousPage}
-                    className="btn"
-                  >
-                    First
-                  </button>
-                  <button
-                    onClick={() => previousPage()}
-                    disabled={!canPreviousPage}
-                    className="btn"
-                  >
-                    Previous
-                  </button>
-                  <button onClick={() => nextPage()} disabled={!canNextPage} className="btn">
-                    Next
-                  </button>
-                  <button
-                    onClick={() => gotoPage(pageCount - 1)}
-                    disabled={!canNextPage}
-                    className="btn"
-                  >
-                    Last
-                  </button>
+                  <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} > First </button>
+                  <button onClick={() => previousPage()} disabled={!canPreviousPage} > Previous </button>
+                  <button onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+                  <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} > Last </button>
                 </nav>
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

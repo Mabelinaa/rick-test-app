@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, createContext, ReactNode, useContext } from 'react';
 import { StoreApi, useStore } from 'zustand';
+
 import { useScreenSizeStore, ScreenSizeState } from '@/stores/screenSize-store';
 
 export const ScreenSizeStoreContext = createContext<StoreApi<ScreenSizeState> | null>(null);
@@ -23,7 +24,7 @@ export const ScreenSizeStoreProvider = ({ children }: ScreenSizeStoreProviderPro
             }
         };
 
-        updateSize(); // Set initial size
+        updateSize();
         window.addEventListener('resize', updateSize);
         return () => window.removeEventListener('resize', updateSize);
     }, []);

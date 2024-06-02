@@ -1,32 +1,15 @@
 import React, { useMemo } from 'react';
 import Link from 'next/link';
+
 import Layout from '@/components/layout';
 import Table from '@/components/shared/Table';
 import { useScreenSizeContext } from '@/providers/screenSizeStore-provider';
-
-const fetchEpisodes = async () => {
-  let allEpisodes  = [] as any[];
-  let nextPage = 'https://rickandmortyapi.com/api/episode';
-
-  while (nextPage) {
-    const response = await fetch(nextPage);
-    const data = await response.json();
-    allEpisodes = allEpisodes.concat(data.results);
-    nextPage = data.info.next;
-  }
-
-  return allEpisodes.map((episode: any) => ({
-    id: episode.id,
-    name: episode.name,
-    air_date: episode.air_date,
-    episode: episode.episode,
-  }));
-};
+import { fetchList } from '@/utils/api-fetch-list';
 
 function Episodes({ episodes }: { episodes: any[] }) {
 
-  const sizeScreen = useScreenSizeContext((state) => state.screenSize);
-  console.log(sizeScreen);
+  const screenSize = useScreenSizeContext((state) => state.screenSize);
+  const isMobile = screenSize < 640;
   
   const columns = useMemo(
     () => [
@@ -60,11 +43,11 @@ function Episodes({ episodes }: { episodes: any[] }) {
   );
 
   const filteredColumns = useMemo(() => {
-    if (sizeScreen < 640) {
+    if (isMobile) {
       return columns.slice(0, 1);
     }
     return columns;
-  }, [columns, sizeScreen]);
+  }, [columns, isMobile]);
 
 
   return (
@@ -75,9 +58,10 @@ function Episodes({ episodes }: { episodes: any[] }) {
             <div className="">
               <h1 className="text-xl font-semibold">Episodios: {episodes.length}</h1>
             </div>
-            <div className="table-container">
+
+            <div >
               <Table columns={filteredColumns} data={episodes} />
-            </div>
+            </div>            
             
           </main>
         </div>
@@ -89,7 +73,7 @@ function Episodes({ episodes }: { episodes: any[] }) {
 export default Episodes;
 
 export const getServerSideProps = async () => {
-  const episodes = await fetchEpisodes();
+  const episodes = await fetchList('episode');
   return {
     props: {
       episodes,

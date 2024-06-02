@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
+import { useRouter } from 'next/router';
+
 import Topbar from '../shared/topbar/Topbar';
 
 interface LayoutProps {
@@ -7,12 +9,23 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({ title, children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
+
+  const router = useRouter();
+  let titlePage = '';
+  if (router.pathname === '/' || router.pathname === '/episode/[id]'){
+    titlePage = 'Episodios';
+  } else if (router.pathname === '/locations' || router.pathname === '/location/[id]'){
+    titlePage = 'Localizaciones';
+  } else if (router.pathname === '/user'){
+    titlePage = 'Usuario';
+  }
+
     return (
       <>
         <Head>
-          <title>{`${title ? title + ' - ' : ''}Rick and Morty`}</title>
-          <meta name="description" content="Rick and Morty App" />
+          <title>{`${titlePage ? titlePage + ' de ' : ''}Rick and Morty`}</title>
+          <meta name="description" content="Rick and Morty" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/logo2.jpg" />
         </Head>
@@ -21,7 +34,7 @@ export default function Layout({ title, children }: LayoutProps) {
           <Topbar />
         </header>
   
-        <main className="bg-slate-200 w-screen h-screen antialiased text-slate-900 selection:bg-blue-900 selection:text-white pt-16 overflow-auto">
+        <main className="bg-slate-200 w-screen h-screen antialiased text-slate-900 selection:bg-blue-900 selection:text-white pt-16 overflow-auto pb-4">
           {children}
         </main>
   

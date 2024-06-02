@@ -1,10 +1,14 @@
 import React from 'react';
-import Layout from '@/components/layout';
 import { GetServerSideProps } from 'next';
+
+import Layout from '@/components/layout';
 import Carousel from '@/components/shared/Carousel';
+import Breadcrumbs from '@/components/shared/BreadCrumbs';
+import EpisodeReviewForm from '@/components/ReviewForm';
 
 const fetchEpisodeDetails = async (id: string) => {
-  const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
+  const API_URL = process.env.API_URL;
+  const response = await fetch(`${API_URL}/episode/${id}`);
   const data = await response.json();
 
   const characters = await Promise.all(
@@ -15,6 +19,7 @@ const fetchEpisodeDetails = async (id: string) => {
   );
 
   return {
+    id: data.id,
     name: data.name,
     air_date: data.air_date,
     episode: data.episode,
@@ -25,6 +30,38 @@ const fetchEpisodeDetails = async (id: string) => {
   };
 };
 
+const Episode = ({ episode }: { episode: any }) => {
+
+  const breadCrumbItems = [
+    { name: ' ← Volver a Episodios', href: '/'},
+  ];
+
+  return (
+    <Layout>
+      <div className="min-h-screen bg-gray-100 text-gray-900">
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+
+          <Breadcrumbs items={breadCrumbItems} />
+
+          <h1 className="text-2xl font-bold">{episode.name}</h1>
+          <p className="text-lg">{episode.episode}</p>
+          <p className="text-lg">{episode.air_date}</p>
+
+          <h2 className="text-xl font-semibold mt-4">Personajes: {episode.characters.length}</h2>
+          <Carousel characters={episode.characters} />
+
+          <hr className="my-8" />
+
+          <EpisodeReviewForm episodeId={episode.id} />
+          
+        </main>
+      </div>
+    </Layout>
+  );
+};
+
+export default Episode;
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
   const episode = await fetchEpisodeDetails(id as string);
@@ -34,50 +71,3 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-
-const Episode = ({ episode }: { episode: any }) => {
-  return (
-    <Layout>
-      <div className="min-h-screen bg-gray-100 text-gray-900">
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <h1 className="text-2xl font-bold">{episode.name}</h1>
-          <p className="text-lg">{episode.episode}</p>
-          <p className="text-lg">{episode.air_date}</p>
-
-          <h2 className="text-xl font-semibold mt-4">Personajes: {episode.characters.length}</h2>
-          <Carousel characters={episode.characters} />
-
-          {/* Form */}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">Comentarios</h2>
-            <form className="mt-2">
-              <input
-                type="text"
-                placeholder="Tu nombre"
-                className="block w-full p-2 border border-gray-300 rounded mt-2"
-              />
-              <input
-                type="email"
-                placeholder="Correo electrónico"
-                className="block w-full p-2 border border-gray-300 rounded mt-2"
-              />
-              <textarea
-                placeholder="Comentario (máx. 500 caracteres)"
-                className="block w-full p-2 border border-gray-300 rounded mt-2"
-                maxLength={500}
-              />
-              <button
-                type="submit"
-                className="mt-2 p-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-              >
-                ENVIAR
-              </button>
-            </form>
-          </div>
-        </main>
-      </div>
-    </Layout>
-  );
-};
-
-export default Episode;
