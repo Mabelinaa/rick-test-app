@@ -1,12 +1,17 @@
 import { Episode } from "@/types";
 import { Location } from "@/types";
 
-export const fetchList = async <T>(endpoint: string): Promise<T[]> => {
+export const fetchList = async (endpoint: string) => {
 
   const API_URL = process.env.API_URL;
-  let allItems = [] as T[];
-  let nextPage = `${API_URL}${endpoint}`;
-
+  let nextPage = `${API_URL}${endpoint}`
+  let allItems = [] as any[];
+  if (endpoint === "episode") {
+  allItems  = [] as Episode[]
+  } else { 
+  allItems  = [] as Location[]
+  }
+  
   while (nextPage) {
     const response = await fetch(nextPage);
     const data = await response.json();
