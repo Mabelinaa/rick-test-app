@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import useSearchInputStore from '@/stores/searchInput-store';
 
 interface SearchInputProps {
-    onToggle: (isOpen: boolean) => void;
-  }
+onToggle: (isOpen: boolean) => void;
+}
 
 function SearchInput({ onToggle }: SearchInputProps) {
 

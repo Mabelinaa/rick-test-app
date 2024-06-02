@@ -60,10 +60,10 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
       <div className="py-2 align-middle inline-block min-w-full">
         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
 
-          {/* Tabla */}
+          {/* Tablae */}
           <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
 
-            {/* Cabeceras */}
+            {/* Head */}
             <thead className="bg-gray-50">
               {headerGroups.map((headerGroup, headerGroupIndex) => (
                 <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
@@ -79,7 +79,7 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
               ))}
             </thead>
 
-            {/* Celdas */}
+            {/* Cells */}
             <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
               {page.map((row, rowIndex) => {
                 prepareRow(row);
@@ -97,7 +97,7 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
 
           </table>
 
-          {/* Botones de navegación */}
+          {/* Pagination */}
           <div className="py-3 flex items-center justify-between">
             <div className="flex-1 flex justify-between sm:hidden">
               <button onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>

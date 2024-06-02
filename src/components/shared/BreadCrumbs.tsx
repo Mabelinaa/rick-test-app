@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 const Breadcrumbs = ({ items }: { items: { name: string; href: string }[] }) => {
+  
   return (
     <nav className="flex text-gray-700 text-sm mb-4" aria-label="Breadcrumb">
       {items.map((item, index) => (

@@ -24,7 +24,7 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
     }
   }, [episodeId]);
 
-    const handleSubmit = async (values: any, { resetForm }: { resetForm: () => void }) => {
+  const handleSubmit = async (values: any) => {
     
     try {
       episodeSchema.parse(values);
@@ -35,7 +35,6 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
         submittedEpisodes[episodeId] = true;
         localStorage.setItem('submittedEpisodes', JSON.stringify(submittedEpisodes));
         setIsSubmitted(true);
-        resetForm();
         setShowConfetti(true);
         setTimeout(() => {
           setShowConfetti(false);
@@ -56,11 +55,12 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
       {showConfetti && <Confetti />}
       {isSubmitted ? (
         <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-4">¡Gracias por su colaboración!</h2>
+          <h2 className="text-2xl green font-semibold mb-4">¡Gracias por su colaboración!</h2>
         </div>
       ) : (
         <>
-
+        
+      {/* Form */}
       <Formik
         initialValues={{
           episodeId,
@@ -76,7 +76,7 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
           <Form className="space-y-4">
           <h2 className="text-2xl font-semibold text-center mb-4">Valora el episodio</h2>
 
-            {/* Puntuación */}
+            {/* Rating */}
             <div className="mb-4">
               <label htmlFor="rating" className="block text-lg font-medium text-gray-700 mb-1">Puntuación:</label>
               <Rating

@@ -25,7 +25,7 @@ const Topbar = () => {
     <nav className="bg-purple-600 text-white p-4 flex justify-between items-center">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto w-full">
 
-        {/* Botón Menú, Icono y Título */}
+        {/* Menu, Icon, Title */}
         <div className="flex items-center space-x-3">
           <button
             onClick={toggleMenu}
@@ -56,20 +56,18 @@ const Topbar = () => {
             
         </div>
         
-        {/* Buscador y Perfil */}
+        {/* Search & profile */}
         <div className="flex items-center space-x-4">
             
-          {/* Buscador */}
           <SearchInput onToggle={handleSearchToggle}/>
 
-          {/* Perfil */}
           <Link href="/user">
             <img className="rounded-full w-8 h-8 bg-center" src="/logo.jpg" alt="Profile" />
           </Link>
 
         </div>
 
-        {/* Menu  */}
+        {/* Modal Menu */}
         {isMenuOpen && (
           <div className="fixed top-16 left-0 bg-purple-700 w-80 h-auto p-4 shadow-lg rounded-md z-50">
             {(isEpisodesPage || !isLocationsPage) && (

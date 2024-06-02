@@ -5,6 +5,7 @@ import Layout from '@/components/layout';
 import Table from '@/components/shared/Table';
 import { useScreenSizeContext } from '@/providers/screenSizeStore-provider';
 import { fetchList } from '@/utils/api-fetch-list';
+import { Spinner } from '@/components/ui/spinner';
 
 function Episodes({ episodes }: { episodes: any[] }) {
 
@@ -55,14 +56,18 @@ function Episodes({ episodes }: { episodes: any[] }) {
       <Layout>
         <div className="min-h-screen bg-gray-100 text-gray-900">
           <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-            <div className="">
-              <h1 className="text-xl font-semibold">Episodios: {episodes.length}</h1>
-            </div>
-
-            <div >
-              <Table columns={filteredColumns} data={episodes} />
-            </div>            
             
+              {episodes.length? (
+                <div>
+                  <h1 className="text-xl font-semibold">Episodios: {episodes.length}</h1>
+                  <Table columns={filteredColumns} data={episodes} />
+                </div>
+              ) : (
+                <div className="flex justify-center items-center h-64">
+                  <Spinner />
+                </div>
+                )}     
+         
           </main>
         </div>
       </Layout>
