@@ -6,7 +6,7 @@ import Confetti from 'react-confetti';
 
 import Rating from './ui/rating';
 import post from '@/utils/api-fake-post';
-import { episodeSchema } from '@/schemas/episode-schema';
+import { reviewSchema } from '@/schemas/review-schema';
 
 interface EpisodeReviewFormProps {
   episodeId: string;
@@ -27,7 +27,7 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
   const handleSubmit = async (values: any) => {
     
     try {
-      episodeSchema.parse(values);
+      reviewSchema.parse(values);
       const response = await post(values);
       
       if (response.status === 200){
@@ -70,7 +70,7 @@ const EpisodeReviewForm: React.FC<EpisodeReviewFormProps> = ({ episodeId }) => {
           email: '',
         }}
         onSubmit={handleSubmit}
-        validationSchema={toFormikValidationSchema(episodeSchema)}
+        validationSchema={toFormikValidationSchema(reviewSchema)}
       >
         {({ setFieldValue, values }) => (
           <Form className="space-y-4">

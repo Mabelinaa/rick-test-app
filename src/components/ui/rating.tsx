@@ -14,13 +14,24 @@ const icons = [
 ];
 
 const Rating: React.FC<RatingProps> = ({ value, onChange }) => {
-  
+
+    const [activeIcon, setActiveIcon] = React.useState(-1);
+
+    const handleClick = (index: number) => {
+        setActiveIcon(index);
+        onChange(index + 1);
+    }
+    
     return (
         <ul className="flex gap-2 justify-center">
             {icons.map((path, index) => (
-                <li key={index} onClick={() => onChange(index + 1)}>
+                <li 
+                    key={index} 
+                    onClick={() => handleClick(index)}
+                    style={{ filter: index > activeIcon ? 'grayscale(100%)' : '', transform: value >= index + 1 ? 'scale(1.2)' : 'scale(1)' }}
+                >
                     <svg
-                        className={`mt-3 w-8 text-cyan-500 hover:scale-105 cursor-pointer ${value >= index + 1 ? 'fill-current' : ''}`}
+                        className={`mt-3 w-8 text-cyan-500 hover:scale-200 cursor-pointer ${value >= index + 1 ? 'fill-current' : ''}`}
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 496 512"

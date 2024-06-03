@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const episodeSchema = z.object({
+export const reviewSchema = z.object({
   episodeId: z.number(),
   rating: z.number({
     required_error: 'Campo Puntuación es requerido',
