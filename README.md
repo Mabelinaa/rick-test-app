@@ -4,7 +4,7 @@ App de Rick and Morty desarrollada con NextJS v14.
 
 ## Demo
 
-![Captura de Pantalla 1](/DemoGig.gif)
+![Demo](https://github.com/Mabelinaa/rick-test-app/blob/main/public/DemoGif.gif)
 
 ## Tecnologías Utilizadas
 
