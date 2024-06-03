@@ -30,6 +30,7 @@ export default function User() {
               <div className="rounded-md shadow">
                 <Link
                   href="https://github.com/Mabelinaa/rick-test-app"
+                  target="_blank"
                   className=" w-full flex items-center justify-center px-5 py-3 border border-transparent text-xs md:text-base font-medium rounded-md text-white bg-green-500 hover:bg-green-700" >
                 GitHub Repositorio
                 </Link>
@@ -49,11 +50,12 @@ export default function User() {
 
             <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0 justify-center">
               <div className="inline-flex rounded-md shadow">
-                <a
-                  href="www.linkedin.com/in/mabel-campomanes-isidoro"
+                <Link
+                  href="https://www.linkedin.com/in/mabel-campomanes-isidoro"
+                  target="_blank"
                   className=" inline-flex items-center justify-center px-5 py-3 border border-transparent text-sm md:text-base font-medium rounded-md  text-white  bg-purple-600  hover:bg-purple-700 ">
                   Linkedin
-                </a>
+                </Link>
               </div>
             </div>
             
