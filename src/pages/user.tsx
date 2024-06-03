@@ -49,11 +49,11 @@ export default function User() {
 
             <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0 justify-center">
               <div className="inline-flex rounded-md shadow">
-                <Link
+                <a
                   href="www.linkedin.com/in/mabel-campomanes-isidoro"
                   className=" inline-flex items-center justify-center px-5 py-3 border border-transparent text-sm md:text-base font-medium rounded-md  text-white  bg-purple-600  hover:bg-purple-700 ">
                   Linkedin
-                </Link>
+                </a>
               </div>
             </div>
             
